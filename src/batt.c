@@ -26,7 +26,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <uncertain.h>
+#include <uxhw.h>
 
 void
 batteryUpdate(Batt * B, double timeNow, double currentLoad, double voltageLoad)
@@ -192,8 +192,8 @@ double
 sigmoid(double x, double start)
 {
 	double supportMaxAbs =
-		fmax(fabs(libUncertainDoubleSupportMax(x - start)),
-	             fabs(libUncertainDoubleSupportMin(x - start)));
+		fmax(fabs(UxHwDoubleSupportMax(x - start)),
+	             fabs(UxHwDoubleSupportMin(x - start)));
 	double scale = kSigmoidMaxScale / supportMaxAbs;
 	return (1 / (1 + exp(-scale * (x - start))));
 }

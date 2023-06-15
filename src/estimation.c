@@ -25,7 +25,7 @@
 #include "batt.h"
 #include <math.h>
 #include <stdio.h>
-#include <uncertain.h>
+#include <uxhw.h>
 
 const double voltageMeasurementNoiseStd = 0.01;
 const double currentMeasurementNoiseStd = 0.001;
@@ -33,13 +33,13 @@ const double currentMeasurementNoiseStd = 0.001;
 double
 voltageSensor(double trueVoltage)
 {
-	return libUncertainDoubleGaussDist(trueVoltage, voltageMeasurementNoiseStd);
+	return UxHwDoubleGaussDist(trueVoltage, voltageMeasurementNoiseStd);
 }
 
 double
 currentSensor(double trueCurrent)
 {
-	return libUncertainDoubleGaussDist(trueCurrent, currentMeasurementNoiseStd);
+	return UxHwDoubleGaussDist(trueCurrent, currentMeasurementNoiseStd);
 }
 
 void
@@ -63,7 +63,7 @@ voltageDirectMapping(void)
 		 *	Compute state of charge.
 		 */
 		soc = voltageToSoc(voltageMeasured);
-		socStd = pow(libUncertainDoubleNthMoment(soc, 2), 0.5);
+		socStd = pow(UxHwDoubleNthMoment(soc, 2), 0.5);
 
 		printf("Voltage[V]: %.3f", voltageMeasured);
 		printf("\t SoC: %.2f", soc);
@@ -103,8 +103,8 @@ coulombCounting(
 		 *	Sample the true current from a uniform distribution
 		 * 	and apply measurement noise to the measured value.
 		 */
-		currentTrue = libUncertainDoubleSample(
-			libUncertainDoubleUniformDist(currentUniformRangeMin, currentUniformRangeMax));
+		currentTrue = UxHwDoubleSample(
+			UxHwDoubleUniformDist(currentUniformRangeMin, currentUniformRangeMax));
 		currentMeasured = currentSensor(currentTrue);
 
 		/*
@@ -113,7 +113,7 @@ coulombCounting(
 		batteryUpdate(&battery, time, currentMeasured, voltageLoad);
 
 		soc = battery.soc;
-		socStd = pow(libUncertainDoubleNthMoment(soc, 2), 0.5);
+		socStd = pow(UxHwDoubleNthMoment(soc, 2), 0.5);
 
 		printf("I[mA]: %.0f", 1000 * currentMeasured);
 		printf("\tSoC: %.2f", soc * 100);
@@ -162,7 +162,7 @@ bayesianEstimation(
 		 *	Sample the true current from a uniform distribution
 		 * 	and apply measurement noise to the measured value.
 		 */
-		currentTrue = libUncertainDoubleSample(libUncertainDoubleUniformDist(
+		currentTrue = UxHwDoubleSample(UxHwDoubleUniformDist(
 			currentUniformRangeMin,
 			currentUniformRangeMax));
 		currentMeasured = currentSensor(currentTrue);
@@ -188,12 +188,12 @@ bayesianEstimation(
 		/*
 		 *	Sample a noisy measurement of the true voltage.
 		 */
-		voltageMeasured = libUncertainDoubleSample(voltageSensor(voltageTrue));
+		voltageMeasured = UxHwDoubleSample(voltageSensor(voltageTrue));
 
 		/*
 		 *	Compute posterior over voltage.
 		 */
-		voltagePosterior = libUncertainDoubleBayesLaplace(
+		voltagePosterior = UxHwDoubleBayesLaplace(
 			&voltageSensor,
 			voltagePrior,
 			voltageMeasured);
@@ -202,7 +202,7 @@ bayesianEstimation(
 		 *	Convert voltage to a distribution over state of charge.
 		 */
 		socPosterior = voltageToSoc(voltagePosterior);
-		socPosteriorStd = pow(libUncertainDoubleNthMoment(socPosterior, 2), 0.5);
+		socPosteriorStd = pow(UxHwDoubleNthMoment(socPosterior, 2), 0.5);
 
 		/*
 		 *	Set the state of charge to the posterior distribution.

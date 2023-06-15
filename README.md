@@ -19,7 +19,7 @@ As the battery is discharged its output voltage decreases. The figure below show
 
 ```
 ...
-voltage = libUncertainDoubleGaussDist(μV, σV)
+voltage = UxHwDoubleGaussDist(μV, σV)
 soc     = voltageToSoc(voltage)
 ...
 ```
@@ -65,7 +65,7 @@ A better estimation method combines both coloumb counting and direct voltage map
 The first step proceeds exactly like method 2, a state of charge distribution is computed using the coloumb counting model. However, instead of using this distribution directly as the input for the next step the estimate is improved by conditioning it on a measurement of the battery voltage. The bayesian inference is done on a single line using:
 
 ```
-posterior = libUncertainDoubleBayesLaplace(&likelihood, prior, evidence)
+posterior = UxHwDoubleBayesLaplace(&likelihood, prior, evidence)
 ```
 The likelihood function is given by the <code>[voltageSensor()](./src/estimation.c#L34)</code> transformed through the discharge characteristic. The evidence is a single measurement of the voltage transformed into a state of charge measurement through the discharge characteristic.
 
