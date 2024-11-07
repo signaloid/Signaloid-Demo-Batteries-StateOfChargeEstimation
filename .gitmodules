@@ -1,0 +1,6 @@
+[submodule "submodules/common"]
+	path = submodules/common
+	url = ../../signaloid/Signaloid-Demo-CommonUtilityRoutines.git
+[submodule "submodules/compat"]
+	path = submodules/compat
+	url = ../../signaloid/Signaloid-Demo-UxHwCompatibilityForNativeExecution.git

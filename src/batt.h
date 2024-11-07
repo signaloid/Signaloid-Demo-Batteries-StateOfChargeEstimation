@@ -1,7 +1,5 @@
 /*
- *	Authored 2022, Mikael Cognell.
- *
- *	Copyright (c) 2022, Signaloid.
+ *	Copyright (c) 2022-2024, Signaloid.
  *
  *	Permission is hereby granted, free of charge, to any person obtaining a copy
  *	of this software and associated documentation files (the "Software"), to deal
@@ -26,71 +24,69 @@
 
 typedef struct
 {
-	int    dead;
-	double totalCapacity;
-	double currentLeak;
-	double current;
-	double currentOld;
-	double voltageBattery;
-	double voltageBatteryExpended;
-	double soc;
-	double timeNow;
-	double timeOld;
-	double remainingCapacity;
+	int	dead;
+	double	totalCapacity;
+	double	currentLeak;
+	double	current;
+	double	currentOld;
+	double	voltageBattery;
+	double	voltageBatteryExpended;
+	double	soc;
+	double	timeNow;
+	double	timeOld;
+	double	remainingCapacity;
 } Batt;
 
 /**
- *	@brief
+ *	@brief	Update battery.
  *
- *	@param Batt * B : battery to update
- *	@param timeNow : current time
- *	@param currentLoad : current at load
- *	@param voltageLoad : voltage at load
+ *	@param	B		: Pointer to battery.
+ *	@param	timeNow		: Current time.
+ *	@param	currentLoad	: Current at load.
+ *	@param	voltageLoad	: Voltage at load.
  */
-void
-batteryUpdate(Batt * B, double timeNow, double currentLoad, double voltageLoad);
+void	batteryUpdate(
+		Batt *	B,
+		double	timeNow,
+		double	currentLoad,
+		double	voltageLoad);
 
 /**
- *	@brief Initialize a battery to 100% state of charge
+ *	@brief	Initialize a battery to 100% state of charge.
  *
- *	@param Batt * B : pointer to battery
- *	@param capacityMilliAh : capacity
+ *	@param	B		: Pointer to battery.
+ *	@param	capacityMilliAh	: Capacity (mAh).
  */
-void
-batteryInitialize(Batt * B, double capacityMilliAh);
+void	batteryInitialize(Batt *  B, double capacityMilliAh);
 
 /**
- *	@brief Voltage to state of charge characteristic
+ *	@brief	Voltage to state of charge characteristic.
  *
- *	@param voltage : voltage
- *	@return double : state of charge
+ *	@param	voltage	: Input voltage.
+ *	@return		: State of charge.
  */
-double
-voltageToSoc(double voltage);
+double	voltageToSoc(double voltage);
 
 /**
- *	@brief Sate of charge to voltage characteristic
+ *	@brief	Sate of charge to voltage characteristic.
  *
- *	@param soc : state of charge [0.0 - 1.0]
- *	@return double : voltage
+ *	@param	soc	: Input state of charge in [0.0 - 1.0].
+ *	@return		: Voltage.
  */
-double
-socToVoltage(double soc);
+double	socToVoltage(double soc);
 
 /**
- *	@brief Set the state of charge manually
+ *	@brief	Set the state of charge of battery.
  *
- *	@param Batt * B: battery
- *	@param soc : state of charge
+ *	@param	B	: Pointer to battery.
+ *	@param	soc	: State of charge.
  */
-void
-batterySetSoc(Batt * B, double soc);
+void	batterySetSoc(Batt *  B, double soc);
 
 /**
- *	@brief Helper function used  piecewise function
+ *	@brief	The sigmoid function.
  *
- *	@param x : sigmoid input
- *	@param start : horizontal shift
+ *	@param	x	: Sigmoid input.
+ *	@param	start	: Horizontal shift.
  */
-double
-sigmoid(double x, double start);
+double	sigmoid(double x, double start);
