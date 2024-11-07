@@ -66,7 +66,7 @@ main(int argc, char * argv[])
 	double 			measuredVoltage;
 	double			outputVariables[kOutputDistributionIndexMax];
 	const char *		outputVariableNames[kOutputDistributionIndexMax] = {"stateOfCharge"};
-	const char *		outputVariableDescriptions[kOutputDistributionIndexMax] = {"State of Charge"};
+	const char *		outputVariableDescriptions[kOutputDistributionIndexMax] = {"The state of charge of the battery"};
 
 	/*
 	 *	Get command-line arguments.
@@ -179,7 +179,6 @@ main(int argc, char * argv[])
 			printHumanConsumableOutput(
 				&arguments,
 				outputVariables,
-				outputVariableNames,
 				outputVariableDescriptions,
 				monteCarloOutputSamples);
 		}

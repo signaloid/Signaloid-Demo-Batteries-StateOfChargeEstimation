@@ -242,7 +242,6 @@ void
 printHumanConsumableOutput(
 	CommandLineArguments *	arguments,
 	double *		outputVariables,
-	const char *		outputVariableNames[kOutputDistributionIndexMax],
 	const char *		outputVariableDescriptions[kOutputDistributionIndexMax],
 	double *		monteCarloOutputSamples)
 {
@@ -261,7 +260,7 @@ printHumanConsumableOutput(
 
 		for (size_t i = 0; i < arguments->common.numberOfMonteCarloIterations; ++i)
 		{
-			printf("%s %s is %lf.\n", outputVariableDescriptions[outputSelect], outputVariableNames[outputSelect], *pointerToValueToPrint);
+			printf("%s is %lf%%.\n", outputVariableDescriptions[outputSelect], *pointerToValueToPrint);
 			pointerToValueToPrint++;
 		}
 	}

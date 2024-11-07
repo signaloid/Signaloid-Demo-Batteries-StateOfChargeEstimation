@@ -116,6 +116,5 @@ void	populateAndPrintJSONVariables(
 void	printHumanConsumableOutput(
 		CommandLineArguments *	arguments,
 		double *		outputVariables,
-		const char *		outputVariableNames[kOutputDistributionIndexMax],
 		const char *		outputVariableDescriptions[kOutputDistributionIndexMax],
 		double *		monteCarloOutputSamples);
