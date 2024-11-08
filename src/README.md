@@ -27,7 +27,7 @@ the UxHw API (which one uses by including `uxhw.h`). This approach enables us to
 carry out native Monte Carlo executions of our C/C++ demo applications without needing
 to make changes to the source code. These source files are symlinks to the original
 files contained in the repository
-[Signaloid-Demo-UxHwCompatibilityForNativeExecution](https://github.com/signaloid/UxHwCompatibility)
+[Signaloid-Demo-UxHwCompatibilityForNativeExecution](https://github.com/signaloid/Signaloid-Demo-UxHwCompatibilityForNativeExecution)
 which is included as a submodule in `submodules/compat`.
 
 ## `config.mk`
